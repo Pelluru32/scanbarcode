@@ -28,11 +28,7 @@ const BarcodeScanner = () => {
   const startWebcamScan = async () => {
     if (webcamRef.current) {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: { exact: 'environment' } // Use exact to match the rear camera
-          }
-        });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
         webcamRef.current.srcObject = stream;
         webcamRef.current.play();
 
