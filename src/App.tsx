@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BrowserMultiFormatReader, Result } from '@zxing/library';
 
-
 const BarcodeScanner = () => {
   const [data, setData] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,7 +28,11 @@ const BarcodeScanner = () => {
   const startWebcamScan = async () => {
     if (webcamRef.current) {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { exact: 'environment' } // Use exact to match the rear camera
+          }
+        });
         webcamRef.current.srcObject = stream;
         webcamRef.current.play();
 
@@ -45,7 +48,7 @@ const BarcodeScanner = () => {
             setData(null);
           });
       } catch (err) {
-        setErrorMessage('Unable to access the webcam.');
+        setErrorMessage('Unable to access the webcam. Please check permissions.');
         setData(null);
       }
     }
@@ -114,4 +117,3 @@ const BarcodeScanner = () => {
 };
 
 export default BarcodeScanner;
-
